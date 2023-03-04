@@ -15,7 +15,7 @@ router.get("/", async (req, res) => {
 //Get single todo
 router.get("/:id", async (req, res) => {
   try{
-    const todo = await Todo.find({id:req.params.id});
+    const todo = await Todo.findById(req.params.id);
     if (!todo) {
       return res.status(404).json("Todo item does not exist");
     }
@@ -41,11 +41,10 @@ router.post("/",async (req, res) => {
 //Delete a todo item
 router.delete("/:id", async (req, res) => {
   try{
-    const todo = await Todo.findById(req.params.id);
+    const todo = await Todo.findByIdAndDelete(req.params.id);
     if (!todo) {
       return res.status(404).json("Todo item does not exist");
     }
-    await todo.delete();
     res.status(200).json("Todo Removed");
   }
   catch(err){
